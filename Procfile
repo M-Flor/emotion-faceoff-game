@@ -1,0 +1,1 @@
+echo "web: gunicorn -b :$PORT main:app" > Procfile

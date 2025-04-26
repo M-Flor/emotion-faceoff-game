@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Emotion Face-Off Game</title>
+    <style>
+        /* General page styling */
+        body {
+            display: flex;
+            font-family: Calibri;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100;
+            margin: 0;
+            text-align: center;
+            background-color: #fffbe6;
+            word-wrap: break-word; /* Ensures long words don't break layout */
+
+        }
+
+        /* Title Styling */
+        h1 {
+            font-size: 25px; /* Keep title size as is */
+            margin-top: 20px;
+            margin-bottom: 10px; /* Reduce gap between title and round indicator */
+        }
+
+        /* Round Indicator */
+        #round-indicator {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        /* Main content box */
+        .container {
+            background: #ffd500;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            word-wrap: break-word; /* Ensures long words don't break layout */
+            margin: 0 auto;        /* Centers it on desktop */
+            margin-top: 15px; /* Push the container below round indicator */
+        }
+
+        /* Increase font size for all text inside the container */
+        .container * {
+            font-size: 20px;
+            font-family: Calibri;
+            font-weight: bold;
+        }
+
+        /* Image styling with curved edges */
+        .image-container img {
+            width: 500;
+            border-radius: 10px; /* Matches the result table */
+        }
+
+        /* Button Styling */
+        .emotion-btn, .answer-btn {
+            margin: 5px;
+            padding: 12px 18px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        /* Default button colors */
+        .emotion-btn { background-color: #d5d4d4; color: black; }
+        .answer-btn { background-color: #d5d4d4; color: black; }
+
+        /* Clicked button effect */
+        .clicked { background-color: #6800d6 !important; color: white !important; }
+
+        /* Hide 'Why' section initially */
+        #why-section { display: none; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <h1>Emotion Face-Off Game</h1>
+
+    <div id="round-indicator">
+        Round: {{ session.get('round', 1) }} of 5
+    </div>
+
+    <div class="container">
+        <form method="POST" action="/game" id="game-form">
+            <div class="image-container">
+                <img src="{{ image['image'] }}" alt="Emotion Image" width="150">
+            </div>
+            <p>Identify the emotion:</p>
+            <input type="hidden" name="image_path" value="{{ image['image'] }}">
+            <input type="hidden" name="actual_label" value="{{ image['label'] }}">
+            <input type="hidden" name="user_guess" id="user_guess">
+
+            <!-- Emotion Buttons -->
+            <button type="button" value="neutral" class="emotion-btn" onclick="setUserGuess(this)">Neutral</button>
+            <button type="button" value="happy" class="emotion-btn" onclick="setUserGuess(this)">Happy</button>
+            <button type="button" value="sad" class="emotion-btn" onclick="setUserGuess(this)">Sad</button>
+            <button type="button" value="disgust" class="emotion-btn" onclick="setUserGuess(this)">Disgust</button>
+            <button type="button" value="fear" class="emotion-btn" onclick="setUserGuess(this)">Fear</button>
+            <button type="button" value="surprise" class="emotion-btn" onclick="setUserGuess(this)">Surprise</button>
+            <button type="button" value="angry" class="emotion-btn" onclick="setUserGuess(this)">Angry</button>
+
+            <!-- Why Section -->
+            <div id="why-section">
+                <p>Why did you choose that emotion? Please select one:</p>
+                <input type="hidden" name="selected_emotion" id="selected-emotion">
+                <input type="hidden" name="reason" id="reason">
+                <button type="button" class="answer-btn" onclick="setAnswer(this, 'Empathy')">Empathy</button>
+                <button type="button" class="answer-btn" onclick="setAnswer(this, 'Experience')">Experience</button>
+                <button type="button" class="answer-btn" onclick="setAnswer(this, 'Facial muscles')">Facial muscles</button>
+                <button type="button" class="answer-btn" onclick="setAnswer(this, 'Intuition')">Intuition</button>
+                <button type="button" class="answer-btn" onclick="setAnswer(this, 'Other')">Other</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function setUserGuess(button) {
+            // Set the selected emotion
+            document.getElementById('user_guess').value = button.value;
+
+            // Change button color
+            document.querySelectorAll('.emotion-btn').forEach(btn => btn.classList.remove('clicked'));
+            button.classList.add('clicked');
+
+            // Show the "Why?" section
+            document.getElementById('why-section').style.display = 'block';
+
+            // Disable emotion buttons
+            document.querySelectorAll('.emotion-btn').forEach(btn => btn.disabled = true);
+        }
+
+        function setAnswer(button, answer) {
+            // Store selected reason in the hidden input field
+            document.getElementById('reason').value = answer;
+
+            // Change button color
+            document.querySelectorAll('.answer-btn').forEach(btn => btn.classList.remove('clicked'));
+            button.classList.add('clicked');
+
+            // Submit the form after selecting a reason
+            setTimeout(() => document.getElementById('game-form').submit(), 500);
+        }
+    </script>
+
+</body>
+</html>

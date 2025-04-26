@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome to Emotion Face-Off Game</title>
+    <style>
+        body {
+            font-family: Calibri;
+            font-size: 18px;
+            text-align: center;
+            padding: 15px;
+            background-color: #ffd500;
+        }
+        form {
+            display: inline-block;
+            text-align: left;
+            margin-top: 8px;
+            width: 25%; /* Reduced width of form */
+        }
+        label {
+            font-family: Calibri;
+            font-weight: bold;
+        }
+        input, select {
+            display: block;
+            width: 100%; /* Form boxes will occupy 100% of the form's width */
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 15px 15px;
+            text-align: center;
+            position: center;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 8px; /* Rounded edges for the buttons */
+        }
+        #start-game-btn {
+            background-color: #6800d6; /* Purple */
+            color: white;
+        }
+        #start-game-btn:hover {
+            background-color: #5800b7; /* Darker purple */
+        }
+        #dashboard-btn {
+            background-color: #007bff; /* Blue */
+            color: white;
+        }
+        #dashboard-btn:hover {
+            background-color: #0056b3; /* Darker blue */
+        }
+        .terms-container {
+            margin-top: 15px;
+            margin-bottom: 15 px;
+            text-align: justify;
+            font-size: 16px;
+            font-family: Calibri;
+            text-align: center;
+            color: #0b0b0b;
+        }
+        .terms-container input {
+            margin-right: 8px;
+        }
+        #start-game-btn {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            gap: 20px;
+        }
+        #dashboard-btn {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            gap: 20px;
+        }
+    </style> 
+    <script>
+        function toggleStartButton() {
+            var termsCheckbox = document.getElementById("terms");
+            var startButton = document.getElementById("start-game-btn");
+            var dashboardButton = document.getElementById("dashboard-btn");
+
+            // Show the start button if the terms checkbox is checked
+            if (termsCheckbox.checked) {
+                startButton.style.display = "inline-block";
+            } else {
+                startButton.style.display = "none";
+            }
+
+                if (termsCheckbox.checked) {
+                dashboardButton.style.display = "inline-block";
+            } else {
+                dashboardButton.style.display = "none";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Welcome to the Emotion Face-Off Game</h1>
+    
+    <p>
+        This game challenges you to identify emotions from facial expressions and compare your responses 
+        with AI predictions.  
+        Can you beat the AI in recognizing emotions? Let’s find out!
+    </p>
+
+    <h3>Before we start, tell us a bit about yourself:</h3>
+
+    <style>
+        /* Make the checkbox larger */
+        input[type="checkbox"] {
+            transform: scale(1.5);
+            margin-right: 10px;
+        }
+    
+        /* Center the buttons and hide them initially */
+        #button-container {
+            text-align: center;
+            display: none;
+            margin-top: 30px;
+        }
+    </style>
+    
+    <form action="/start-game" method="POST" autocomplete="off">
+    <form action="/dashboard" method="POST" autocomplete="off">
+    
+        <label for="username">User name (can be fictitious):</label>
+        <input type="text" id="username" name="username" required autocomplete="off">
+    
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required autocomplete="off">
+    
+        <label for="city">City of residence:</label>
+        <input type="text" id="city" name="city" required autocomplete="off">
+    
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" required onchange="toggleOtherGender()">
+            <option value="" disabled selected>Select an option</option>
+            <option value="Prefer not to say">Prefer not to say</option>
+            <option value="Woman">Woman</option>
+            <option value="Man">Man</option>
+            <option value="Non-binary">Non-binary</option>
+            <option value="Other">Other</option>
+        </select>
+    
+        <input type="text" id="other_gender" name="other_gender" placeholder="Please specify" style="display: none;">
+    
+        <script>
+            function toggleOtherGender() {
+                var genderSelect = document.getElementById("gender");
+                var otherGenderInput = document.getElementById("other_gender");
+    
+                if (genderSelect.value === "Other") {
+                    otherGenderInput.style.display = "block";
+                } else {
+                    otherGenderInput.style.display = "none";
+                }
+            }
+        </script>
+    
+        <label for="education">Level of education:</label>
+        <select id="education" name="education" required onchange="showOtherEducationField()">
+            <option value="" disabled selected>Select an option</option>
+            <option value="No formal education">Primary</option>
+            <option value="GCSE/Secondary School">GCSE/Secondary School</option>
+            <option value="A-level/College">A-level/College</option>
+            <option value="Undergraduate degree">Undergraduate degree</option>
+            <option value="Postgraduate degree">Postgraduate degree</option>
+            <option value="Other">Other</option>
+        </select>
+    
+        <div id="otherEducationDiv" style="display:none;">
+            <label for="otherEducation">Please specify:</label>
+            <input type="text" id="otherEducation" name="otherEducation" />
+        </div>
+    
+        <script>
+            function showOtherEducationField() {
+                var educationSelect = document.getElementById('education');
+                var otherEducationDiv = document.getElementById('otherEducationDiv');
+    
+                if (educationSelect.value === "Other") {
+                    otherEducationDiv.style.display = "block";
+                } else {
+                    otherEducationDiv.style.display = "none";
+                }
+            }
+        </script>
+    
+        <!-- Terms and Conditions section -->
+        <div class="terms-container">
+            <input type="checkbox" id="terms" name="terms" required onchange="toggleStartButton()">
+            <label for="terms">
+                I agree to the terms and conditions. The data you provide will be collected and used for research purposes.
+            </label>
+        </div>
+
+        <!-- Start Game button initially hidden -->
+        <div id="button-container" style="display: none; margin-top: 15px; display: flex; justify-content: center; gap: 15px;">
+        <button type="submit" id="start-game-btn">Start Game</button>
+        <a href="{{ url_for('dashboard') }}" target="_blank">
+            <button type="button" id="dashboard-btn">Open Dashboard</button>
+        </a>
+        </div>
+
+    
+    </form>
+</body>
+</html>

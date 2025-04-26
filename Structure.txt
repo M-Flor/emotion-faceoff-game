@@ -1,0 +1,15 @@
+Flask_Project/
+│
+├── app.py                # Flask app (Python code)
+├── static/               # For static files
+│   ├── dataset/          # Moved FER-2013 dataset here
+│       ├── FER-2013/
+│           ├── train/
+│           └── test/
+│               ├── angry/
+│               ├── happy/
+│               └── ...
+├── templates/            # For HTML templates
+│   ├── game.html         # Game interface
+│   ├── index.html        # Home page 
+├── requirements.txt      # List of dependencies

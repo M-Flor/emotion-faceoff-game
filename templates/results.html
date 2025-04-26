@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Results</title font=Calibri>
+    <style>
+        body {
+            font-family: Calibri;
+            font-size: 20;
+            text-align: center;
+            background-color: #fdfef2;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1, h2  {
+            color: #333;
+        }
+        
+        p {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .table-container {
+            display: flex;
+            justify-content: center;
+            width: 80%;
+            margin-top: 20px;
+            margin: 0 auto;        /* Centers it on desktop */
+
+        }
+
+        table {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;        /* Centers it on desktop */
+            font-weight: bold;
+            border-collapse: collapse;
+            background: fdfef2;
+            border-radius: 8px;
+            border-color: #fdfef2;
+            overflow: hidden;
+            box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        th {
+                padding: 12px;
+                text-align: center;
+                background-color: #555;
+                color: white;
+            }
+
+            /* First row with white background and black text */
+            thead tr:first-child th {
+                background-color: white;
+                color: black;
+            }
+
+            /* Second row with gray background and white text */
+            thead tr:nth-child(2) th {
+                background-color: #383838;
+                color: white;
+            }
+
+            /* Second row with gray background and white text */
+            thead tr:nth-child(2) th {
+                background-color: #383838;
+                color: white;
+            }
+
+        td {
+            padding: 12px;
+            text-align: center;
+            background-color: #fdfef2;
+            color:#101010;
+            border: 1px solid #fdfef2;
+        }
+
+
+        /* Column colors */
+        td:nth-child(1) { background-color: #eed855; } /* Emotion - Gold */
+        td:nth-child(2) { background-color: rgb(220, 104, 61); } /* User Guess - Light Blue */
+        td:nth-child(3) { background-color: rgb(0, 190, 190); } /* AI Prediction - Light Salmon */
+
+        img {
+            border-radius: 5px;
+        }
+
+        .button-container {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 18;
+        }
+
+        .dashboard-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            margin: 10px;
+        }
+
+        .play-again-btn {
+            background-color: rgb(106, 0, 255);
+            font-size: 18;
+        }
+
+        .play-again-btn:hover {
+            background-color: rgb(119, 0, 255);
+        }
+
+        .dashboard-btn {
+            background-color: #007BFF;
+        }
+
+        .dashboard-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Game Results</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th style="text-align: center;">User Score: {{ user_score }}</th>
+                <th style="text-align: center;">AI Model Score: {{ ai_score }}</th>
+            </tr>
+            <tr>
+                <th style="text-align: center; vertical-align: top;">Emotion</th>
+                <th>User Guess</th>
+                <th>AI Prediction</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for image, label, user_guess, ai_prediction in results_data %}
+            <tr>
+                <td style="display: flex; align-items: center; text-align: left;">
+                    <img src="{{ image }}" alt="Emotion Image" style="width: 50px; height: 50px; margin-right: 10px;">
+                    {{ label }}
+                </td>
+                <td style="text-align: center; vertical-align: middle;">{{ user_guess }}</td>
+                <td style="text-align: center; vertical-align: middle;">{{ ai_prediction }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <div class="button-container">
+        <a href="{{ url_for('dashboard') }}" target="_blank">View Data analyses</a>
+        <a href="{{ url_for('index') }}" class="btn play-again-btn">Play Again</a>
+    </div>
+</body>
+</html>
