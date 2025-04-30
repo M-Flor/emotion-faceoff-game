@@ -29,12 +29,9 @@ Surprise
 Neutral
 
 Project Structure
-php
-Copiar
-Editar
 Flask_Project/
 │
-├── app.py                 # Main Flask application (backend logic)
+├── app.py                 # Main Flask application 
 ├── static/                # Static files (CSS, JavaScript, images)
 │   ├── dataset/           # (Dataset images are stored externally in cloud storage.)
 ├── templates/             # HTML templates for rendering the web pages
