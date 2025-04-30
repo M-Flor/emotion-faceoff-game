@@ -41,34 +41,21 @@ Flask_Project/
 │   ├── dashboard.html     # Dashboard for overall statistics
 │
 ├── requirements.txt       # List of Python dependencies
-Note: The dataset used for the game is not included in the repository and is hosted on an external cloud service.
+#Note: The dataset used for the game is not included in the repository and is hosted on an external cloud service.
 
 Installation and Running the Application
 Clone the repository:
-
-bash
-Copiar
-Editar
 git clone https://github.com/your-username/Emotion-Face-Off-Game.git
 cd Emotion-Face-Off-Game
-Create a virtual environment:
 
-bash
-Copiar
-Editar
+Create a virtual environment:
 python -m venv venv
 source venv/bin/activate   # On Windows: venv\Scripts\activate
+
 Install the required dependencies:
-
-bash
-Copiar
-Editar
 pip install -r requirements.txt
-Run the Flask application:
 
-bash
-Copiar
-Editar
+Run the Flask application:
 python app.py
 
 License
